@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.streamliners.sendingobjects.databinding.ActivityMainBinding;
 
 import java.io.Serializable;
@@ -23,8 +26,18 @@ public class MainActivity extends AppCompatActivity {
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
         setupHideErrorForEditText();
+        TextInputEditText phoneNoEt = b.phoneNoEt;
+        phoneNoEt.setOnEditorActionListener(editorActionListener);
+
     }
 
+    private TextInputEditText.OnEditorActionListener editorActionListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            objSender(v);
+            return false;
+        }
+    };
     /**
      * TextWatcher which hides error when text changes
      */
@@ -66,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Send Object as explicit intent to another activity
-     * @param view
      */
     public void objSender(View view){
         //Get name, gender, rollno and phone no of student
